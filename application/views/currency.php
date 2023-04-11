@@ -166,7 +166,8 @@
 				return;
 			}
 
-			performConversion($(this));
+			setTimeout(() => performConversion($(this)), 1);
+
 		});
 	}
 
