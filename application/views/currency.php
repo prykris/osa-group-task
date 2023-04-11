@@ -170,6 +170,20 @@
 		});
 	}
 
+	function populateTable(data) {
+		$('table > tbody > tr').remove();
+
+		Object.values(data).forEach((currency) => {
+			$('table > tbody').append(
+				$(`
+					<tr id="table-row-${currency.code.toLowerCase()}">
+						<td>${currency.code}</td>
+						<td>${currency.value}</td>
+					</tr>`)
+			);
+		})
+	}
+
 	function initCurrencySelectors(currencies) {
 		const fromSelector = $('#currency-selector-from');
 		const toSelector = $('#currency-selector-to');
@@ -184,8 +198,8 @@
 		fromSelector.change(function () {
 			fetchCurrencyRates($(this).val()).then((response) => {
 				setConversionRate(response.data[toSelector.val()].value);
+				populateTable(response.data);
 
-				console.log('One ' + fromSelector.val() + ' is equal to ' + response.data[toSelector.val()].value + ' ' + toSelector.val())
 
 				performConversion();
 			});
@@ -193,9 +207,7 @@
 
 		toSelector.change(function () {
 			setConversionRate(currencies[$(this).val()].value);
-
-			console.log('One ' + fromSelector.val() + ' is equal to ' + currencies[toSelector.val()].value + ' ' + toSelector.val())
-
+			populateTable(response.data);
 
 			performConversion();
 		});
