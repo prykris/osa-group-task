@@ -207,7 +207,7 @@
 
 		toSelector.change(function () {
 			setConversionRate(currencies[$(this).val()].value);
-			populateTable(response.data);
+			populateTable(currencies);
 
 			performConversion();
 		});
